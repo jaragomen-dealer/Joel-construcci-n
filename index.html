@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,102 +8,181 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .brand-blue { background-color: #4D5A76; }
-        .brand-orange { color: #D35400; border-color: #D35400; }
-        .btn-primary { background-color: #D35400; }
+        .brand-orange-text { color: #D35400; }
+        .brand-orange-bg { background-color: #D35400; }
+        .focus-orange:focus { border-color: #D35400; outline: none; }
     </style>
 </head>
-<body class="bg-slate-100 font-sans text-slate-800">
+<body class="bg-gray-50 font-sans text-gray-700">
 
-    <div class="max-w-2xl mx-auto py-8 px-4">
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+    <div class="max-w-3xl mx-auto py-10 px-4">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
             
             <div class="brand-blue p-8 text-center text-white">
-                <img src="logo.jpg" alt="Logo" class="h-20 w-20 mx-auto mb-4 bg-white rounded-full p-2 object-contain shadow-sm">
-                <h1 class="text-xl font-bold uppercase tracking-tight">Ficha de Identidad Familiar</h1>
-                <p class="text-xs italic mt-2">"Hacemos de tu familia en comunidad, un espacio para la santidad."</p>
+                <img src="logo.jpg" alt="Logo" class="h-24 w-24 mx-auto mb-4 bg-white rounded-full p-2 object-contain shadow-md">
+                <h1 class="text-2xl font-bold uppercase tracking-tight">Ficha de Identidad Familiar</h1>
+                <p class="text-sm italic opacity-90 mt-2">"Hacemos de tu familia en comunidad, un espacio para la santidad."</p>
             </div>
 
-            <form id="sheetForm" class="p-8 space-y-8">
+            <form id="uploadForm" class="p-8 space-y-10">
                 
-                <div class="space-y-4">
-                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">1. Identidad de los Esposos y Comunidad</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
-                        <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
+                <div class="space-y-6">
+                    <h2 class="brand-orange-text font-bold border-b-2 border-[#D35400] pb-2 text-lg uppercase">1. Identidad de los Esposos y Comunidad</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b-2 p-3 focus-orange w-full" required>
+                        <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b-2 p-3 focus-orange w-full" required>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="comunidad" placeholder="Comunidad a la que pertenece" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <input type="text" name="comunidad" placeholder="Comunidad" class="border-b-2 p-3 focus-orange w-full" required>
                         <div class="flex flex-col">
-                            <label class="text-[10px] text-slate-400 font-bold uppercase">Aniversario Boda</label>
-                            <input type="date" name="aniversario" class="border-b p-2 outline-none focus:border-[#D35400]">
+                            <label class="text-[10px] font-bold uppercase text-gray-400">Aniversario Boda</label>
+                            <input type="date" name="aniversario" class="border-b-2 p-2 focus-orange">
+                        </div>
+                        <input type="tel" name="whatsapp" placeholder="WhatsApp" class="border-b-2 p-3 focus-orange w-full" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold uppercase text-gray-500">
+                        <div class="p-3 bg-gray-50 rounded-lg border">
+                            <label>Foto de Él <input type="file" name="file_el" class="block mt-2 w-full"></label>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg border">
+                            <label>Foto de Ella <input type="file" name="file_ella" class="block mt-2 w-full"></label>
+                        </div>
+                        <div class="p-3 bg-gray-50 rounded-lg border">
+                            <label>Foto Pareja <input type="file" name="file_pareja" class="block mt-2 w-full"></label>
                         </div>
                     </div>
-                    <input type="tel" name="whatsapp" placeholder="WhatsApp (Ej. +1809...)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
-                    
-                    <div class="grid grid-cols-3 gap-2 text-[9px] uppercase font-bold text-slate-500">
-                        <label>Foto Él <input type="file" name="foto_el" accept="image/*" class="block mt-1"></label>
-                        <label>Foto Ella <input type="file" name="foto_ella" accept="image/*" class="block mt-1"></label>
-                        <label>Foto Pareja <input type="file" name="foto_pareja" accept="image/*" class="block mt-1"></label>
+                </div>
+
+                <div class="space-y-6">
+                    <h2 class="brand-orange-text font-bold border-b-2 border-[#D35400] pb-2 text-lg uppercase">2. Identidad de los Hijos</h2>
+                    <div id="hijos-container" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <input type="text" name="hijo1_nombre" placeholder="Nombre Hijo 1" class="border-b-2 p-2 focus-orange bg-transparent">
+                            <div class="flex flex-col">
+                                <label class="text-[9px] font-bold text-gray-400 uppercase">Cumpleaños</label>
+                                <input type="date" name="hijo1_cumple" class="border-b-2 p-1 focus-orange bg-transparent">
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-[9px] font-bold text-gray-400 uppercase">Foto Hijo 1</label>
+                                <input type="file" name="file_hijo1" class="text-[10px] mt-1">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <input type="text" name="hijo2_nombre" placeholder="Nombre Hijo 2" class="border-b-2 p-2 focus-orange bg-transparent">
+                            <div class="flex flex-col">
+                                <label class="text-[9px] font-bold text-gray-400 uppercase">Cumpleaños</label>
+                                <input type="date" name="hijo2_cumple" class="border-b-2 p-1 focus-orange bg-transparent">
+                            </div>
+                            <div class="flex flex-col">
+                                <label class="text-[9px] font-bold text-gray-400 uppercase">Foto Hijo 2</label>
+                                <input type="file" name="file_hijo2" class="text-[10px] mt-1">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="space-y-4">
-                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">2. Identidad de los Hijos (Cumpleaños)</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                        <div class="flex gap-2"><input type="text" name="hijo1" placeholder="Nombre Hijo 1" class="border-b p-1 w-full text-sm"><input type="date" name="cumple1" class="border-b text-sm"></div>
-                        <div class="flex gap-2"><input type="text" name="hijo2" placeholder="Nombre Hijo 2" class="border-b p-1 w-full text-sm"><input type="date" name="cumple2" class="border-b text-sm"></div>
-                        <div class="flex gap-2"><input type="text" name="hijo3" placeholder="Nombre Hijo 3" class="border-b p-1 w-full text-sm"><input type="date" name="cumple3" class="border-b text-sm"></div>
-                        <div class="flex gap-2"><input type="text" name="hijo4" placeholder="Nombre Hijo 4" class="border-b p-1 w-full text-sm"><input type="date" name="cumple4" class="border-b text-sm"></div>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">3. Núcleo Familiar y Lema</h2>
-                    <div class="border-2 border-dashed border-slate-200 p-4 rounded-xl text-center">
-                        <label class="text-[10px] font-bold text-slate-400 uppercase cursor-pointer">
-                            [ Clic para subir Foto Familiar Completa ]
-                            <input type="file" name="foto_familia" accept="image/*" class="hidden">
+                <div class="space-y-6">
+                    <h2 class="brand-orange-text font-bold border-b-2 border-[#D35400] pb-2 text-lg uppercase">3. Núcleo Familiar</h2>
+                    <div class="p-6 border-2 border-dashed border-gray-200 rounded-2xl text-center">
+                        <label class="cursor-pointer">
+                            <span class="text-xs font-bold text-gray-400 uppercase">[ Subir Foto Familiar Completa ]</span>
+                            <input type="file" name="file_familia" class="block mx-auto mt-2 text-xs">
                         </label>
                     </div>
-                    <textarea name="lema" placeholder="Escribe aquí el Lema de tu Familia..." class="w-full border p-3 rounded-xl text-sm italic h-24 focus:ring-1 focus:ring-[#D35400] outline-none"></textarea>
+                    <textarea name="lema" placeholder="Escribe aquí el Lema de la Familia..." class="w-full border-2 p-4 rounded-2xl text-sm italic h-28 focus:border-[#4D5A76] outline-none"></textarea>
                 </div>
 
-                <button type="submit" id="btnSubmit" class="w-full btn-primary text-white py-4 rounded-2xl font-bold uppercase tracking-widest shadow-lg hover:opacity-90 transition-all flex justify-center items-center">
-                    <span id="btnText">Enviar Ficha Familiar</span>
+                <button type="submit" id="submitBtn" class="w-full brand-orange-bg text-white py-5 rounded-2xl font-bold uppercase tracking-widest shadow-xl hover:opacity-90 transition-all flex justify-center items-center">
+                    <span id="btnText">Enviar Ficha a la Pastoral</span>
                 </button>
             </form>
-            
-            <div class="brand-blue p-4 text-center text-[10px] text-white/70">
-                "Hacemos de tu familia en comunidad, un espacio para la santidad."
-            </div>
         </div>
     </div>
 
     <script>
-        const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI'; // PASO FINAL: Poner la URL del script de Google Sheets
-        const form = document.getElementById('sheetForm');
-        const btn = document.getElementById('btnSubmit');
+        const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI';
+        const form = document.getElementById('uploadForm');
+        const btn = document.getElementById('submitBtn');
         const txt = document.getElementById('btnText');
 
         form.addEventListener('submit', e => {
             e.preventDefault();
             btn.disabled = true;
-            txt.innerText = "Guardando en Base de Datos...";
+            txt.innerText = "Subiendo imágenes y datos...";
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            const formData = new FormData(form);
+            
+            // Convertimos las imágenes a base64 para enviarlas al script
+            const fileInputs = form.querySelectorAll('input[type="file"]');
+            const promises = Array.from(fileInputs).map(input => {
+                const file = input.files[0];
+                if (!file) return Promise.resolve({ name: input.name, data: null });
+                return new Promise(resolve => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve({ name: input.name, data: reader.result.split(',')[1], fileName: file.name });
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            Promise.all(promises).then(files => {
+                const payload = {};
+                new FormData(form).forEach((value, key) => { if(!(value instanceof File)) payload[key] = value; });
+                payload.files = files.filter(f => f.data);
+
+                fetch(scriptURL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                })
+                .then(res => res.json())
                 .then(response => {
-                    alert('¡Ficha Familiar guardada con éxito!');
-                    txt.innerText = "Enviar Ficha Familiar";
-                    btn.disabled = false;
+                    alert('¡Éxito! La ficha se guardó en Google Sheets.');
                     form.reset();
+                    btn.disabled = false;
+                    txt.innerText = "Enviar Ficha a la Pastoral";
                 })
                 .catch(error => {
-                    console.error('Error!', error.message);
-                    alert('Error al conectar con la base de datos.');
+                    alert('Error al enviar. Revisa la consola.');
                     btn.disabled = false;
+                    txt.innerText = "Enviar Ficha a la Pastoral";
                 });
+            });
         });
     </script>
 </body>
 </html>
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    // 1. Crear o buscar carpeta para las fotos
+    var folderName = "Fotos Pastoral 2026";
+    var folders = DriveApp.getFoldersByName(folderName);
+    var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
+    
+    // 2. Procesar Archivos y obtener sus links
+    var fileUrls = {};
+    if (data.files) {
+      data.files.forEach(function(file) {
+        var blob = Utilities.newBlob(Utilities.base64Decode(file.data), "image/jpeg", file.fileName);
+        var driveFile = folder.createFile(blob);
+        fileUrls[file.name] = driveFile.getUrl();
+      });
+    }
 
+    // 3. Guardar en la Hoja (Ordenado por columnas)
+    sheet.appendRow([
+      new Date(),
+      data.nombre_el, data.nombre_ella, data.comunidad, data.aniversario, data.whatsapp,
+      fileUrls.file_el || "", fileUrls.file_ella || "", fileUrls.file_pareja || "",
+      data.hijo1_nombre, data.hijo1_cumple, fileUrls.file_hijo1 || "",
+      data.hijo2_nombre, data.hijo2_cumple, fileUrls.file_hijo2 || "",
+      fileUrls.file_familia || "", data.lema
+    ]);
+
+    return ContentService.createTextOutput(JSON.stringify({"result": "success"})).setMimeType(ContentService.MimeType.JSON);
+  } catch (f) {
+    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": f.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
