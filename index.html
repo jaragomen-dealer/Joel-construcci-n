@@ -5,86 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha Familiar - SCDJVJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .brand-blue { background-color: #4D5A76; }
+        .brand-orange { color: #D35400; border-color: #D35400; }
+        .btn-primary { background-color: #D35400; }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="max-w-2xl mx-auto py-10 px-4">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div class="bg-[#003366] p-8 text-center text-white">
-                <img src="logo.jpg" alt="Logo" class="h-20 w-20 mx-auto mb-4 bg-white rounded-full p-2 object-contain">
-                <h1 class="text-xl font-bold uppercase">Ficha de Identidad Familiar</h1>
+<body class="bg-slate-100 font-sans text-slate-800">
+
+    <div class="max-w-2xl mx-auto py-8 px-4">
+        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200">
+            
+            <div class="brand-blue p-8 text-center text-white">
+                <img src="logo.jpg" alt="Logo" class="h-20 w-20 mx-auto mb-4 bg-white rounded-full p-2 object-contain shadow-sm">
+                <h1 class="text-xl font-bold uppercase tracking-tight">Ficha de Identidad Familiar</h1>
                 <p class="text-xs italic mt-2">"Hacemos de tu familia en comunidad, un espacio para la santidad."</p>
             </div>
 
-            <form id="n8nForm" class="p-8 space-y-6">
+            <form id="sheetForm" class="p-8 space-y-8">
+                
                 <div class="space-y-4">
-                    <h2 class="text-[#D32F2F] font-bold border-b pb-1 text-sm uppercase">1. Identidad de los Esposos</h2>
+                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">1. Identidad de los Esposos y Comunidad</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="nombre_el" placeholder="Nombre y Apellidos (Él) [cite: 4]" class="border-b-2 p-2 outline-none focus:border-[#003366] w-full" required>
-                        <input type="text" name="nombre_ella" placeholder="Nombre y Apellidos (Ella) [cite: 5]" class="border-b-2 p-2 outline-none focus:border-[#003366] w-full" required>
+                        <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
+                        <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="comunidad" placeholder="Comunidad a la que pertenece [cite: 9]" class="border-b-2 p-2 outline-none focus:border-[#003366] w-full" required>
+                        <input type="text" name="comunidad" placeholder="Comunidad a la que pertenece" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
                         <div class="flex flex-col">
-                            <label class="text-[10px] text-gray-400 font-bold uppercase">Aniversario Boda [cite: 10]</label>
-                            <input type="date" name="aniversario" class="border-b-2 p-2 outline-none focus:border-[#003366]">
+                            <label class="text-[10px] text-slate-400 font-bold uppercase">Aniversario Boda</label>
+                            <input type="date" name="aniversario" class="border-b p-2 outline-none focus:border-[#D35400]">
                         </div>
                     </div>
-                    <input type="tel" name="whatsapp" placeholder="WhatsApp [cite: 11]" class="border-b-2 p-2 outline-none focus:border-[#003366] w-full" required>
-                </div>
-
-                <div class="space-y-4">
-                    <h2 class="text-[#D32F2F] font-bold border-b pb-1 text-sm uppercase">2. Identidad de los Hijos</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" name="hijo1_nombre" placeholder="Nombre Hijo 1 [cite: 13]" class="border-b-2 p-2 text-sm outline-none">
-                        <input type="date" name="hijo1_cumple" class="border-b-2 p-2 text-sm outline-none">
-                        <input type="text" name="hijo2_nombre" placeholder="Nombre Hijo 2 [cite: 16]" class="border-b-2 p-2 text-sm outline-none">
-                        <input type="date" name="hijo2_cumple" class="border-b-2 p-2 text-sm outline-none">
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h2 class="text-[#D32F2F] font-bold border-b pb-1 text-sm uppercase">3. Núcleo Familiar</h2>
-                    <textarea name="lema" placeholder="Lema de la Familia [cite: 23]" class="border-2 p-3 w-full rounded-xl text-sm italic h-20 outline-none focus:border-[#003366]"></textarea>
+                    <input type="tel" name="whatsapp" placeholder="WhatsApp (Ej. +1809...)" class="border-b p-2 outline-none focus:border-[#D35400] w-full" required>
                     
-                    <div class="space-y-2">
-                        <label class="block text-[10px] font-bold text-gray-500 uppercase">Foto Familiar Completa [cite: 18]</label>
-                        <input type="file" name="foto_familia" accept="image/*" class="text-xs">
+                    <div class="grid grid-cols-3 gap-2 text-[9px] uppercase font-bold text-slate-500">
+                        <label>Foto Él <input type="file" name="foto_el" accept="image/*" class="block mt-1"></label>
+                        <label>Foto Ella <input type="file" name="foto_ella" accept="image/*" class="block mt-1"></label>
+                        <label>Foto Pareja <input type="file" name="foto_pareja" accept="image/*" class="block mt-1"></label>
                     </div>
                 </div>
 
-                <button type="submit" id="btnSubmit" class="w-full bg-[#003366] text-white py-4 rounded-2xl font-bold uppercase shadow-lg hover:bg-blue-900 transition-all">
-                    <span id="btnText">Enviar a la Pastoral</span>
+                <div class="space-y-4">
+                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">2. Identidad de los Hijos (Cumpleaños)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                        <div class="flex gap-2"><input type="text" name="hijo1" placeholder="Nombre Hijo 1" class="border-b p-1 w-full text-sm"><input type="date" name="cumple1" class="border-b text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="hijo2" placeholder="Nombre Hijo 2" class="border-b p-1 w-full text-sm"><input type="date" name="cumple2" class="border-b text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="hijo3" placeholder="Nombre Hijo 3" class="border-b p-1 w-full text-sm"><input type="date" name="cumple3" class="border-b text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="hijo4" placeholder="Nombre Hijo 4" class="border-b p-1 w-full text-sm"><input type="date" name="cumple4" class="border-b text-sm"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <h2 class="brand-orange font-bold border-b-2 pb-1 text-sm uppercase">3. Núcleo Familiar y Lema</h2>
+                    <div class="border-2 border-dashed border-slate-200 p-4 rounded-xl text-center">
+                        <label class="text-[10px] font-bold text-slate-400 uppercase cursor-pointer">
+                            [ Clic para subir Foto Familiar Completa ]
+                            <input type="file" name="foto_familia" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+                    <textarea name="lema" placeholder="Escribe aquí el Lema de tu Familia..." class="w-full border p-3 rounded-xl text-sm italic h-24 focus:ring-1 focus:ring-[#D35400] outline-none"></textarea>
+                </div>
+
+                <button type="submit" id="btnSubmit" class="w-full btn-primary text-white py-4 rounded-2xl font-bold uppercase tracking-widest shadow-lg hover:opacity-90 transition-all flex justify-center items-center">
+                    <span id="btnText">Enviar Ficha Familiar</span>
                 </button>
             </form>
+            
+            <div class="brand-blue p-4 text-center text-[10px] text-white/70">
+                "Hacemos de tu familia en comunidad, un espacio para la santidad."
+            </div>
         </div>
     </div>
 
     <script>
-        document.getElementById('n8nForm').addEventListener('submit', async (e) => {
+        const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI'; // PASO FINAL: Poner la URL del script de Google Sheets
+        const form = document.getElementById('sheetForm');
+        const btn = document.getElementById('btnSubmit');
+        const txt = document.getElementById('btnText');
+
+        form.addEventListener('submit', e => {
             e.preventDefault();
-            const btn = document.getElementById('btnSubmit');
-            const txt = document.getElementById('btnText');
             btn.disabled = true;
-            txt.innerText = "Enviando...";
+            txt.innerText = "Guardando en Base de Datos...";
 
-            const formData = new FormData(e.target);
-            
-            // PEGA AQUÍ TU URL DE n8n [Webhook]
-            const WEBHOOK_URL = 'TU_URL_DE_N8N_AQUI';
-
-            try {
-                const response = await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
-                if (response.ok) {
-                    alert('¡Recibido! Sus datos se han guardado en la base de la Pastoral.');
-                    e.target.reset();
-                }
-            } catch (err) {
-                alert('Error de conexión.');
-            } finally {
-                btn.disabled = false;
-                txt.innerText = "Enviar a la Pastoral";
-            }
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(response => {
+                    alert('¡Ficha Familiar guardada con éxito!');
+                    txt.innerText = "Enviar Ficha Familiar";
+                    btn.disabled = false;
+                    form.reset();
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Error al conectar con la base de datos.');
+                    btn.disabled = false;
+                });
         });
     </script>
 </body>
 </html>
+
