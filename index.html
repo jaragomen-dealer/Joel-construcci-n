@@ -1,26 +1,85 @@
-[
-  {
-    "title": "Encuentra el animal correcto",
-    "slug": "encuentra-animal-correcto",
-    "description": "Toca el animal correcto según la instrucción",
-    "age_range": "5-6",
-    "type": "selection",
-    "language": "es"
-  },
-  {
-    "title": "Une la familia",
-    "slug": "une-la-familia",
-    "description": "Une cada miembro con su familia",
-    "age_range": "5-7",
-    "type": "drag",
-    "language": "es"
-  },
-  {
-    "title": "Colores divertidos",
-    "slug": "colores-divertidos",
-    "description": "Elige el color correcto",
-    "age_range": "5-6",
-    "type": "selection",
-    "language": "es"
-  }
-]
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha Familiar - SCDJVJ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+
+    <div class="max-w-xl mx-auto min-h-screen flex flex-col justify-center py-6 px-4">
+        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+            
+            <div class="bg-[#003366] p-8 text-center text-white">
+                <img src="logo.jpg" alt="Logo Pastoral" class="h-24 w-24 mx-auto mb-4 bg-white rounded-full p-2 object-contain shadow-md">
+                <h1 class="text-xl font-bold uppercase tracking-tighter">Ficha de Identidad Familiar</h1>
+                <p class="text-xs italic opacity-80 mt-2">"Hacemos de tu familia en comunidad, un espacio para la santidad."</p>
+            </div>
+
+            <form id="n8nForm" class="p-8 space-y-5">
+                <div>
+                    <label class="block text-[10px] font-bold text-[#D32F2F] uppercase mb-1">Comunidad a la que pertenecen</label>
+                    <select name="comunidad" class="w-full border-b-2 border-gray-200 py-2 outline-none focus:border-[#003366] transition-colors bg-transparent" required>
+                        <option value="" disabled selected>Seleccione su comunidad...</option>
+                        <option value="Emaus">Emaús</option>
+                        <option value="Juan XXIII">Juan XXIII</option>
+                        <option value="Matrimonios con Cristo">Matrimonios con Cristo</option>
+                        <option value="Otra">Otra / General</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="text" name="nombre_el" placeholder="Nombre y Apellido (Él)" class="border-b-2 border-gray-200 py-2 outline-none focus:border-[#003366] w-full" required>
+                    <input type="text" name="nombre_ella" placeholder="Nombre y Apellido (Ella)" class="border-b-2 border-gray-200 py-2 outline-none focus:border-[#003366] w-full" required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 text-[10px] text-gray-400 font-bold uppercase">
+                    <div>
+                        <label class="mb-1 block text-[#D32F2F]">Foto Pareja (Aniversarios)</label>
+                        <input type="file" name="foto_pareja" accept="image/*" class="w-full" required>
+                    </div>
+                    <div>
+                        <label class="mb-1 block text-[#D32F2F]">Foto Familiar Completa</label>
+                        <input type="file" name="foto_familia" accept="image/*" class="w-full" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="btnSubmit" class="w-full bg-[#003366] text-white py-4 rounded-2xl font-bold uppercase tracking-widest hover:bg-blue-900 shadow-lg transition-all active:scale-95 flex justify-center items-center">
+                    <span id="btnText">Enviar Ficha a la Pastoral</span>
+                </button>
+            </form>
+        </div>
+        <p class="text-center text-[10px] text-gray-400 mt-6 uppercase">© 2026 Pastoral Familiar Sagrado Corazón de Jesús</p>
+    </div>
+
+    <script>
+        document.getElementById('n8nForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmit');
+            const txt = document.getElementById('btnText');
+            
+            btn.disabled = true;
+            txt.innerText = "Enviando... por favor espere";
+
+            const formData = new FormData(e.target);
+            const WEBHOOK_URL = 'TU_URL_DE_N8N_AQUI'; 
+
+            try {
+                const response = await fetch(WEBHOOK_URL, { method: 'POST', body: formData });
+                if (response.ok) {
+                    alert('¡Recibido! Su ficha ha sido enviada correctamente.');
+                    e.target.reset();
+                } else {
+                    alert('Error al enviar. Intente de nuevo.');
+                }
+            } catch (err) {
+                alert('Error de conexión.');
+            } finally {
+                btn.disabled = false;
+                txt.innerText = "Enviar Ficha a la Pastoral";
+            }
+        });
+    </script>
+</body>
+</html>
