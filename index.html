@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,14 +7,15 @@
     <title>Ficha Familiar - SCDJVJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .nav-blue { background-color: #003366; } /* Azul vibrante del logo */
+        .nav-blue { background-color: #003366; }
         .accent-orange { color: #D35400; border-color: #D35400; }
         .bg-orange { background-color: #D35400; }
+        .focus-orange:focus { border-color: #D35400; outline: none; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
 
-    <div class="max-w-3xl mx-auto py-10 px-4">
+    <div class="max-w-4xl mx-auto py-10 px-4">
         <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
             
             <div class="nav-blue p-8 text-center text-white">
@@ -26,73 +28,82 @@
                 
                 <div class="space-y-6">
                     <h2 class="accent-orange font-bold border-b-2 pb-2 text-lg uppercase italic">1. Identidad de los Esposos</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b-2 p-3 outline-none focus:border-[#D35400] w-full" required>
-                        <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b-2 p-3 outline-none focus:border-[#D35400] w-full" required>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <input type="text" name="comunidad" placeholder="Comunidad" class="border-b-2 p-3 outline-none focus:border-[#D35400] w-full" required>
-                        <div class="flex flex-col text-[10px] font-bold text-slate-400 uppercase">
-                            <label>Aniversario Boda</label>
-                            <input type="date" name="aniversario" class="border-b-2 p-2 outline-none focus:border-[#D35400]">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-3">
+                            <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b-2 p-3 focus-orange w-full font-semibold" required>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento (Él)</label>
+                            <input type="date" name="nacimiento_el" class="border-b-2 p-2 focus-orange w-full bg-transparent">
                         </div>
-                        <input type="tel" name="whatsapp" placeholder="WhatsApp" class="border-b-2 p-3 outline-none focus:border-[#D35400] w-full" required>
+                        <div class="space-y-3">
+                            <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b-2 p-3 focus-orange w-full font-semibold" required>
+                            <label class="text-[10px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento (Ella)</label>
+                            <input type="date" name="nacimiento_ella" class="border-b-2 p-2 focus-orange w-full bg-transparent">
+                        </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold uppercase text-slate-500">
-                        <div class="p-3 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Él <input type="file" name="file_el" class="block mt-2 w-full"></label></div>
-                        <div class="p-3 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Ella <input type="file" name="file_ella" class="block mt-2 w-full"></label></div>
-                        <div class="p-3 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Pareja <input type="file" name="file_pareja" class="block mt-2 w-full"></label></div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <input type="text" name="comunidad" placeholder="Comunidad" class="border-b-2 p-3 focus-orange w-full" required>
+                        <div class="flex flex-col"><label class="text-[10px] font-bold text-slate-400 uppercase">Aniversario Boda</label><input type="date" name="aniversario" class="border-b-2 p-2 focus-orange bg-transparent"></div>
+                        <input type="tel" name="whatsapp" placeholder="WhatsApp" class="border-b-2 p-3 focus-orange w-full" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[10px] font-bold uppercase text-slate-500">
+                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Él <input type="file" name="file_el" class="block mt-2 w-full"></label></div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Ella <input type="file" name="file_ella" class="block mt-2 w-full"></label></div>
+                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Pareja <input type="file" name="file_pareja" class="block mt-2 w-full"></label></div>
                     </div>
                 </div>
 
                 <div class="space-y-6">
-                    <h2 class="accent-orange font-bold border-b-2 pb-2 text-lg uppercase italic">2. Identidad de los Hijos (Cumpleaños)</h2>
+                    <h2 class="accent-orange font-bold border-b-2 pb-2 text-lg uppercase italic">2. Identidad de los Hijos</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 space-y-3">
+                        <div class="p-5 bg-blue-50/30 rounded-3xl border border-blue-100 space-y-3">
                             <input type="text" name="hijo1_nombre" placeholder="Nombre Hijo 1" class="border-b p-2 w-full bg-transparent outline-none">
-                            <input type="date" name="hijo1_cumple" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase">Foto Hijo 1</label><input type="file" name="file_hijo1" class="text-[10px] w-full">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
+                            <input type="date" name="hijo1_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 1</label><input type="file" name="file_hijo1" class="text-[10px] w-full">
                         </div>
-                        <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 space-y-3">
+                        <div class="p-5 bg-blue-50/30 rounded-3xl border border-blue-100 space-y-3">
                             <input type="text" name="hijo2_nombre" placeholder="Nombre Hijo 2" class="border-b p-2 w-full bg-transparent outline-none">
-                            <input type="date" name="hijo2_cumple" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase">Foto Hijo 2</label><input type="file" name="file_hijo2" class="text-[10px] w-full">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
+                            <input type="date" name="hijo2_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 2</label><input type="file" name="file_hijo2" class="text-[10px] w-full">
                         </div>
-                        <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 space-y-3">
+                        <div class="p-5 bg-blue-50/30 rounded-3xl border border-blue-100 space-y-3">
                             <input type="text" name="hijo3_nombre" placeholder="Nombre Hijo 3" class="border-b p-2 w-full bg-transparent outline-none">
-                            <input type="date" name="hijo3_cumple" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase">Foto Hijo 3</label><input type="file" name="file_hijo3" class="text-[10px] w-full">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
+                            <input type="date" name="hijo3_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 3</label><input type="file" name="file_hijo3" class="text-[10px] w-full">
                         </div>
-                        <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100 space-y-3">
+                        <div class="p-5 bg-blue-50/30 rounded-3xl border border-blue-100 space-y-3">
                             <input type="text" name="hijo4_nombre" placeholder="Nombre Hijo 4" class="border-b p-2 w-full bg-transparent outline-none">
-                            <input type="date" name="hijo4_cumple" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase">Foto Hijo 4</label><input type="file" name="file_hijo4" class="text-[10px] w-full">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
+                            <input type="date" name="hijo4_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
+                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 4</label><input type="file" name="file_hijo4" class="text-[10px] w-full">
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-6">
-                    <h2 class="accent-orange font-bold border-b-2 pb-2 text-lg uppercase italic">3. Núcleo Familiar y Lema</h2>
-                    <div class="p-6 border-2 border-dashed border-blue-200 rounded-3xl text-center bg-blue-50/20">
+                    <h2 class="accent-orange font-bold border-b-2 pb-2 text-lg uppercase italic">3. Núcleo Familiar</h2>
+                    <div class="p-8 border-2 border-dashed border-blue-200 rounded-3xl text-center bg-blue-50/10">
                         <label class="cursor-pointer font-bold text-slate-400 uppercase text-xs">
                             [ + Subir Foto Familiar Completa ]
                             <input type="file" name="file_familia" class="block mx-auto mt-2">
                         </label>
                     </div>
-                    <textarea name="lema" placeholder="Escribe aquí el Lema de tu Familia..." class="w-full border-2 p-4 rounded-2xl text-sm italic h-32 focus:border-[#003366] outline-none shadow-inner"></textarea>
+                    <textarea name="lema" placeholder="Escribe aquí el Lema de tu Familia..." class="w-full border-2 p-5 rounded-3xl text-sm italic h-32 focus:border-[#003366] outline-none shadow-inner"></textarea>
                 </div>
 
-                <button type="submit" id="submitBtn" class="w-full nav-blue text-white py-5 rounded-3xl font-bold uppercase tracking-widest shadow-xl hover:bg-blue-900 transition-all flex justify-center items-center">
+                <button type="submit" id="submitBtn" class="w-full nav-blue text-white py-6 rounded-3xl font-bold uppercase tracking-widest shadow-xl hover:bg-blue-900 transition-all flex justify-center items-center">
                     <span id="btnText">Enviar Ficha a la Pastoral</span>
                 </button>
             </form>
         </div>
-        <p class="text-center text-[10px] text-slate-400 mt-6 uppercase">© 2026 Pastoral Familiar Sagrado Corazón de Jesús</p>
     </div>
 
     <script>
-        const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI'; // NO OLVIDES PONER TU URL AQUÍ
+        const scriptURL = 'TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUI'; 
         const form = document.getElementById('uploadForm');
         const btn = document.getElementById('submitBtn');
         const txt = document.getElementById('btnText');
@@ -100,7 +111,7 @@
         form.addEventListener('submit', e => {
             e.preventDefault();
             btn.disabled = true;
-            txt.innerText = "Subiendo imágenes y datos...";
+            txt.innerText = "Subiendo datos y fotos...";
 
             const fileInputs = form.querySelectorAll('input[type="file"]');
             const promises = Array.from(fileInputs).map(input => {
@@ -121,15 +132,12 @@
                 fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
                 .then(res => res.json())
                 .then(response => {
-                    alert('¡Éxito! La ficha se guardó en Google Sheets.');
+                    alert('¡Recibido! Sus datos han sido guardados.');
                     form.reset();
                     btn.disabled = false;
                     txt.innerText = "Enviar Ficha a la Pastoral";
                 })
-                .catch(error => {
-                    alert('Error de conexión con la base de datos.');
-                    btn.disabled = false;
-                });
+                .catch(error => { alert('Error de conexión.'); btn.disabled = false; });
             });
         });
     </script>
