@@ -10,6 +10,7 @@
         .brand-red-text { color: #E41E26; border-color: #E41E26; }
         .brand-red-bg { background-color: #E41E26; }
         .focus-red:focus { border-color: #E41E26; outline: none; }
+        .child-card { transition: all 0.3s ease; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
@@ -68,33 +69,15 @@
                 </div>
 
                 <div class="space-y-6">
-                    <h2 class="brand-red-text font-bold border-b-2 pb-2 text-lg uppercase italic">2. Identidad de los Hijos</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3">
-                            <input type="text" name="hijo1_nombre" placeholder="Nombre Hijo 1" class="border-b p-2 w-full bg-transparent outline-none">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
-                            <input type="date" name="hijo1_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 1</label><input type="file" name="file_hijo1" class="text-[10px] w-full">
-                        </div>
-                        <div class="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3">
-                            <input type="text" name="hijo2_nombre" placeholder="Nombre Hijo 2" class="border-b p-2 w-full bg-transparent outline-none">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
-                            <input type="date" name="hijo2_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 2</label><input type="file" name="file_hijo2" class="text-[10px] w-full">
-                        </div>
-                        <div class="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3">
-                            <input type="text" name="hijo3_nombre" placeholder="Nombre Hijo 3" class="border-b p-2 w-full bg-transparent outline-none">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
-                            <input type="date" name="hijo3_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 3</label><input type="file" name="file_hijo3" class="text-[10px] w-full">
-                        </div>
-                        <div class="p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3">
-                            <input type="text" name="hijo4_nombre" placeholder="Nombre Hijo 4" class="border-b p-2 w-full bg-transparent outline-none">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
-                            <input type="date" name="hijo4_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
-                            <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto Hijo 4</label><input type="file" name="file_hijo4" class="text-[10px] w-full">
-                        </div>
+                    <div class="flex justify-between items-center border-b-2 pb-2">
+                        <h2 class="brand-red-text font-bold text-lg uppercase italic">2. Identidad de los Hijos</h2>
+                        <button type="button" onclick="agregarHijo()" class="brand-red-bg text-white px-4 py-2 rounded-full text-xs font-bold hover:opacity-80 transition-all shadow-md">
+                            + AGREGAR HIJO
+                        </button>
                     </div>
+                    
+                    <div id="contenedor-hijos" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        </div>
                 </div>
 
                 <div class="space-y-6">
@@ -121,7 +104,43 @@
         const form = document.getElementById('uploadForm');
         const btn = document.getElementById('submitBtn');
         const txt = document.getElementById('btnText');
+        const contenedorHijos = document.getElementById('contenedor-hijos');
+        
+        let contadorHijos = 0;
 
+        // Función para agregar campos de hijos dinámicamente
+        function agregarHijo() {
+            if (contadorHijos >= 8) {
+                alert("Se ha alcanzado el límite de 8 hijos para este formulario.");
+                return;
+            }
+            contadorHijos++;
+            
+            const div = document.createElement('div');
+            div.className = "child-card p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3 relative shadow-sm";
+            div.id = `bloque-hijo-${contadorHijos}`;
+            div.innerHTML = `
+                <button type="button" onclick="eliminarHijo(${contadorHijos})" class="absolute top-2 right-4 text-slate-300 hover:text-red-500 font-bold text-xl">×</button>
+                <h3 class="text-[10px] font-bold text-slate-400 uppercase">Hijo/Hija #${contadorHijos}</h3>
+                <input type="text" name="hijo${contadorHijos}_nombre" placeholder="Nombre completo" class="border-b p-2 w-full bg-transparent outline-none focus:border-[#0054A6] font-medium">
+                <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
+                <input type="date" name="hijo${contadorHijos}_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
+                <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto</label>
+                <input type="file" name="file_hijo${contadorHijos}" class="text-[10px] w-full">
+            `;
+            contenedorHijos.appendChild(div);
+        }
+
+        function eliminarHijo(id) {
+            const elemento = document.getElementById(`bloque-hijo-${id}`);
+            elemento.classList.add('opacity-0', 'scale-95');
+            setTimeout(() => elemento.remove(), 300);
+        }
+
+        // Cargar el primer hijo por defecto al iniciar
+        window.onload = () => { agregarHijo(); };
+
+        // Lógica de envío de datos
         form.addEventListener('submit', e => {
             e.preventDefault();
             btn.disabled = true;
@@ -140,18 +159,22 @@
 
             Promise.all(promises).then(files => {
                 const payload = {};
-                new FormData(form).forEach((value, key) => { if(!(value instanceof File)) payload[key] = value; });
+                new FormData(form).forEach((value, key) => { 
+                    if(!(value instanceof File)) payload[key] = value; 
+                });
                 payload.files = files.filter(f => f.data);
 
                 fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
                 .then(res => res.json())
                 .then(response => {
-                    alert('¡Recibido! Sus datos han sido guardados en el Excel.');
-                    form.reset();
+                    alert('¡Recibido! Los datos de su familia han sido guardados con éxito.');
+                    location.reload(); // Recarga para limpiar todo
+                })
+                .catch(error => { 
+                    alert('Error de conexión. Por favor intente de nuevo.'); 
                     btn.disabled = false;
                     txt.innerText = "Enviar Ficha a la Pastoral";
-                })
-                .catch(error => { alert('Error de conexión.'); btn.disabled = false; });
+                });
             });
         });
     </script>
