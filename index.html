@@ -27,6 +27,7 @@
                 
                 <div class="space-y-6">
                     <h2 class="brand-red-text font-bold border-b-2 pb-2 text-lg uppercase italic">1. Identidad de los Esposos</h2>
+                    
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-3">
                             <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b-2 p-3 focus-red w-full font-semibold" required>
@@ -40,10 +41,23 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <input type="text" name="comunidad" placeholder="Comunidad" class="border-b-2 p-3 focus-red w-full" required>
-                        <div class="flex flex-col"><label class="text-[10px] font-bold text-slate-400 uppercase">Aniversario Boda</label><input type="date" name="aniversario" class="border-b-2 p-2 focus-red bg-transparent"></div>
-                        <input type="tel" name="whatsapp" placeholder="WhatsApp" class="border-b-2 p-3 focus-red w-full" required>
+                        <div class="flex flex-col">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">Aniversario Boda</label>
+                            <input type="date" name="aniversario" class="border-b-2 p-2 focus-red bg-transparent">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">WhatsApp (Él)</label>
+                            <input type="tel" name="whatsapp_el" placeholder="Ej: 829XXXXXXX" class="border-b-2 p-3 focus-red w-full font-semibold" required>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold text-slate-400 uppercase">WhatsApp (Ella)</label>
+                            <input type="tel" name="whatsapp_ella" placeholder="Ej: 829XXXXXXX" class="border-b-2 p-3 focus-red w-full font-semibold" required>
+                        </div>
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[10px] font-bold uppercase text-slate-500">
