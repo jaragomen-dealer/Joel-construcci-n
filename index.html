@@ -1,184 +1,47 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha Familiar - SCDJVJ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .brand-blue { background-color: #0054A6; }
-        .brand-red-text { color: #E41E26; border-color: #E41E26; }
-        .brand-red-bg { background-color: #E41E26; }
-        .focus-red:focus { border-color: #E41E26; outline: none; }
-        .child-card { transition: all 0.3s ease; }
-    </style>
-</head>
-<body class="bg-slate-50 font-sans text-slate-800">
+function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    
+    var folderName = "Fotos Pastoral 2026";
+    var folders = DriveApp.getFoldersByName(folderName);
+    var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(folderName);
+    
+    var fileUrls = {};
+    if (data.files) {
+      data.files.forEach(function(file) {
+        var blob = Utilities.newBlob(Utilities.base64Decode(file.data), "image/jpeg", file.fileName);
+        var driveFile = folder.createFile(blob);
+        fileUrls[file.name] = driveFile.getUrl();
+      });
+    }
 
-    <div class="max-w-4xl mx-auto py-10 px-4">
-        <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
-            
-            <div class="brand-blue p-8 text-center text-white">
-                <img src="logo.jpg" alt="Logo" class="h-24 w-24 mx-auto mb-4 bg-white rounded-full p-2 object-contain shadow-md">
-                <h1 class="text-2xl font-bold uppercase tracking-tight">Ficha de Identidad Familiar</h1>
-                <p class="text-sm italic opacity-90 mt-2">"Hacemos de tu familia en comunidad, un espacio para la santidad."</p>
-            </div>
+    // Guardar en la Hoja con estructura fija de 8 hijos para no romper el orden
+    sheet.appendRow([
+      new Date(), // A: Marca Temporal
+      data.nombre_el, data.nacimiento_el, // B, C
+      data.nombre_ella, data.nacimiento_ella, // D, E
+      data.comunidad, data.aniversario, // F, G
+      data.whatsapp_el, data.whatsapp_ella, // H, I
+      fileUrls.file_el || "", fileUrls.file_ella || "", fileUrls.file_pareja || "", // J, K, L
+      
+      // Bloques de Hijos (3 columnas por hijo x 8 hijos = 24 columnas)
+      data.hijo1_nombre || "", data.hijo1_nacimiento || "", fileUrls.file_hijo1 || "", 
+      data.hijo2_nombre || "", data.hijo2_nacimiento || "", fileUrls.file_hijo2 || "", 
+      data.hijo3_nombre || "", data.hijo3_nacimiento || "", fileUrls.file_hijo3 || "", 
+      data.hijo4_nombre || "", data.hijo4_nacimiento || "", fileUrls.file_hijo4 || "",
+      data.hijo5_nombre || "", data.hijo5_nacimiento || "", fileUrls.file_hijo5 || "",
+      data.hijo6_nombre || "", data.hijo6_nacimiento || "", fileUrls.file_hijo6 || "",
+      data.hijo7_nombre || "", data.hijo7_nacimiento || "", fileUrls.file_hijo7 || "",
+      data.hijo8_nombre || "", data.hijo8_nacimiento || "", fileUrls.file_hijo8 || "",
+      
+      fileUrls.file_familia || "", data.lema // AK, AL: Foto Familiar y Lema siempre al final
+    ]);
 
-            <form id="uploadForm" class="p-8 space-y-10">
-                
-                <div class="space-y-6">
-                    <h2 class="brand-red-text font-bold border-b-2 pb-2 text-lg uppercase italic">1. Identidad de los Esposos</h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-3">
-                            <input type="text" name="nombre_el" placeholder="Nombres y Apellidos (Él)" class="border-b-2 p-3 focus-red w-full font-semibold" required>
-                            <label class="text-[10px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento (Él)</label>
-                            <input type="date" name="nacimiento_el" class="border-b-2 p-2 focus-red w-full bg-transparent">
-                        </div>
-                        <div class="space-y-3">
-                            <input type="text" name="nombre_ella" placeholder="Nombres y Apellidos (Ella)" class="border-b-2 p-3 focus-red w-full font-semibold" required>
-                            <label class="text-[10px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento (Ella)</label>
-                            <input type="date" name="nacimiento_ella" class="border-b-2 p-2 focus-red w-full bg-transparent">
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <input type="text" name="comunidad" placeholder="Comunidad" class="border-b-2 p-3 focus-red w-full" required>
-                        <div class="flex flex-col">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">Aniversario Boda</label>
-                            <input type="date" name="aniversario" class="border-b-2 p-2 focus-red bg-transparent">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">WhatsApp (Él)</label>
-                            <input type="tel" name="whatsapp_el" placeholder="Ej: 829XXXXXXX" class="border-b-2 p-3 focus-red w-full font-semibold" required>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold text-slate-400 uppercase">WhatsApp (Ella)</label>
-                            <input type="tel" name="whatsapp_ella" placeholder="Ej: 829XXXXXXX" class="border-b-2 p-3 focus-red w-full font-semibold" required>
-                        </div>
-                    </div>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-[10px] font-bold uppercase text-slate-500">
-                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Él <input type="file" name="file_el" class="block mt-2 w-full"></label></div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Ella <input type="file" name="file_ella" class="block mt-2 w-full"></label></div>
-                        <div class="p-4 bg-slate-50 rounded-xl border border-dashed text-center"><label>Foto Pareja <input type="file" name="file_pareja" class="block mt-2 w-full"></label></div>
-                    </div>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="flex justify-between items-center border-b-2 pb-2">
-                        <h2 class="brand-red-text font-bold text-lg uppercase italic">2. Identidad de los Hijos</h2>
-                        <button type="button" onclick="agregarHijo()" class="brand-red-bg text-white px-4 py-2 rounded-full text-xs font-bold hover:opacity-80 transition-all shadow-md">
-                            + AGREGAR HIJO
-                        </button>
-                    </div>
-                    
-                    <div id="contenedor-hijos" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        </div>
-                </div>
-
-                <div class="space-y-6">
-                    <h2 class="brand-red-text font-bold border-b-2 pb-2 text-lg uppercase italic">3. Núcleo Familiar</h2>
-                    <div class="p-8 border-2 border-dashed border-slate-300 rounded-3xl text-center bg-slate-50">
-                        <label class="cursor-pointer font-bold text-slate-400 uppercase text-xs">
-                            [ + Subir Foto Familiar Completa ]
-                            <input type="file" name="file_familia" class="block mx-auto mt-2">
-                        </label>
-                    </div>
-                    <textarea name="lema" placeholder="Escribe aquí el Lema de tu Familia..." class="w-full border-2 p-5 rounded-3xl text-sm italic h-32 focus:border-[#0054A6] outline-none shadow-inner"></textarea>
-                </div>
-
-                <button type="submit" id="submitBtn" class="w-full brand-red-bg text-white py-6 rounded-3xl font-bold uppercase tracking-widest shadow-xl hover:opacity-90 transition-all flex justify-center items-center">
-                    <span id="btnText">Enviar Ficha a la Pastoral</span>
-                </button>
-            </form>
-        </div>
-        <p class="text-center text-[10px] text-slate-400 mt-6 uppercase">© 2026 Pastoral Familiar Sagrado Corazón de Jesús</p>
-    </div>
-
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbwDlVFS3WhGSDShplvF4lBMehqRRSwnt7xKmQQTI8UOVd7LIdSK_v2KbbRiCZKQjcNB/exec';
-        const form = document.getElementById('uploadForm');
-        const btn = document.getElementById('submitBtn');
-        const txt = document.getElementById('btnText');
-        const contenedorHijos = document.getElementById('contenedor-hijos');
-        
-        let contadorHijos = 0;
-
-        // Función para agregar campos de hijos dinámicamente
-        function agregarHijo() {
-            if (contadorHijos >= 8) {
-                alert("Se ha alcanzado el límite de 8 hijos para este formulario.");
-                return;
-            }
-            contadorHijos++;
-            
-            const div = document.createElement('div');
-            div.className = "child-card p-5 bg-slate-50 rounded-3xl border border-slate-200 space-y-3 relative shadow-sm";
-            div.id = `bloque-hijo-${contadorHijos}`;
-            div.innerHTML = `
-                <button type="button" onclick="eliminarHijo(${contadorHijos})" class="absolute top-2 right-4 text-slate-300 hover:text-red-500 font-bold text-xl">×</button>
-                <h3 class="text-[10px] font-bold text-slate-400 uppercase">Hijo/Hija #${contadorHijos}</h3>
-                <input type="text" name="hijo${contadorHijos}_nombre" placeholder="Nombre completo" class="border-b p-2 w-full bg-transparent outline-none focus:border-[#0054A6] font-medium">
-                <label class="text-[9px] font-bold text-slate-400 uppercase block">Fecha de Nacimiento</label>
-                <input type="date" name="hijo${contadorHijos}_nacimiento" class="border-b p-1 w-full bg-transparent text-sm">
-                <label class="text-[9px] font-bold text-slate-400 uppercase block">Foto</label>
-                <input type="file" name="file_hijo${contadorHijos}" class="text-[10px] w-full">
-            `;
-            contenedorHijos.appendChild(div);
-        }
-
-        function eliminarHijo(id) {
-            const elemento = document.getElementById(`bloque-hijo-${id}`);
-            elemento.classList.add('opacity-0', 'scale-95');
-            setTimeout(() => elemento.remove(), 300);
-        }
-
-        // Cargar el primer hijo por defecto al iniciar
-        window.onload = () => { agregarHijo(); };
-
-        // Lógica de envío de datos
-        form.addEventListener('submit', e => {
-            e.preventDefault();
-            btn.disabled = true;
-            txt.innerText = "Subiendo datos y fotos...";
-
-            const fileInputs = form.querySelectorAll('input[type="file"]');
-            const promises = Array.from(fileInputs).map(input => {
-                const file = input.files[0];
-                if (!file) return Promise.resolve({ name: input.name, data: null });
-                return new Promise(resolve => {
-                    const reader = new FileReader();
-                    reader.onload = () => resolve({ name: input.name, data: reader.result.split(',')[1], fileName: file.name });
-                    reader.readAsDataURL(file);
-                });
-            });
-
-            Promise.all(promises).then(files => {
-                const payload = {};
-                new FormData(form).forEach((value, key) => { 
-                    if(!(value instanceof File)) payload[key] = value; 
-                });
-                payload.files = files.filter(f => f.data);
-
-                fetch(scriptURL, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(response => {
-                    alert('¡Recibido! Los datos de su familia han sido guardados con éxito.');
-                    location.reload(); // Recarga para limpiar todo
-                })
-                .catch(error => { 
-                    alert('Error de conexión. Por favor intente de nuevo.'); 
-                    btn.disabled = false;
-                    txt.innerText = "Enviar Ficha a la Pastoral";
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+    return ContentService.createTextOutput(JSON.stringify({"result": "success"})).setMimeType(ContentService.MimeType.JSON);
+  } catch (f) {
+    return ContentService.createTextOutput(JSON.stringify({"result": "error", "error": f.toString()})).setMimeType(ContentService.MimeType.JSON);
+  }
+}
 
 
